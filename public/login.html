@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Login</title>
+
+  <!-- CSS is inside public/style.css -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body class="login-page">
+
+  <main class="login-card">
+
+    <a class="logo" href="/">
+      ROYAL <span>STITCH</span>
+      <small>STAFF PORTAL</small>
+    </a>
+
+    <h1>Admin Login</h1>
+
+    <form id="loginForm">
+
+      <label>
+        Username
+        <input
+          name="user"
+          type="text"
+          required
+          autocomplete="username"
+        >
+      </label>
+
+      <label>
+        Password
+        <input
+          name="pass"
+          type="password"
+          required
+          autocomplete="current-password"
+        >
+      </label>
+
+      <button class="btn gold" type="submit">
+        Sign in →
+      </button>
+
+      <div id="error" class="error"></div>
+
+    </form>
+
+    <a href="/">
+      ← Back to website
+    </a>
+
+  </main>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const errorElement = document.getElementById("error");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      errorElement.textContent = "";
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(
+            Object.fromEntries(new FormData(loginForm))
+          )
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+          window.location.href = "/admin";
+        } else {
+          errorElement.textContent = data.error || "Login failed";
+        }
+
+      } catch (error) {
+        console.error(error);
+        errorElement.textContent =
+          "Unable to connect to the server.";
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,2589 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Royal Stitch — Admin Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0b2030;
+      --navy2: #102b40;
+      --gold: #e4b24d;
+      --bg: #f5f7fb;
+      --white: #fff;
+      --text: #14233d;
+      --muted: #6e809b;
+      --border: #dfe6ef;
+
+      --green: #12a86d;
+      --blue: #1877e8;
+      --red: #ef4444;
+      --purple: #7653d5;
+      --orange: #eea51d;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 285px;
+      background:
+        linear-gradient(
+          180deg,
+          #092031 0%,
+          #0d263a 55%,
+          #091b2a 100%
+        );
+      color: white;
+      padding: 25px 12px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      text-decoration: none;
+      color: white;
+      padding: 0 14px 28px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-crown {
+      color: var(--gold);
+      font-size: 30px;
+    }
+
+    .brand-name {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .brand-name span {
+      color: var(--gold);
+    }
+
+    .brand-subtitle {
+      margin-left: 45px;
+      margin-top: 6px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #bdc9d7;
+    }
+
+    .nav-item {
+      width: 100%;
+      padding: 15px 17px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #c7d2df;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      margin-bottom: 5px;
+      font-size: 15px;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,.08);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: rgba(228,178,77,.25);
+      color: white;
+      box-shadow: inset 4px 0 var(--gold);
+    }
+
+    .nav-icon {
+      width: 25px;
+      text-align: center;
+      font-size: 19px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      text-align: center;
+      color: #bdc8d6;
+      font-family: Georgia, serif;
+      font-style: italic;
+      font-size: 14px;
+      line-height: 1.6;
+      padding-bottom: 5px;
+    }
+
+    .footer-line {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .footer-line::before,
+    .footer-line::after {
+      content: "";
+      height: 1px;
+      width: 55px;
+      background: var(--gold);
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main-wrapper {
+      margin-left: 285px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 85px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 0 30px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .top-search {
+      width: 475px;
+      position: relative;
+    }
+
+    .top-search span {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #657994;
+      font-size: 20px;
+    }
+
+    .top-search input {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #ccd7e5;
+      border-radius: 6px;
+      padding: 0 15px 0 42px;
+      outline: none;
+    }
+
+    .top-search input:focus {
+      border-color: var(--gold);
+    }
+
+    .top-spacer {
+      flex: 1;
+    }
+
+    .notification-button {
+      position: relative;
+      width: 45px;
+      height: 45px;
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+      color: #314762;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: red;
+      border: 2px solid white;
+    }
+
+    .top-button {
+      height: 46px;
+      padding: 0 21px;
+      border: 1px solid #d6dfeb;
+      border-radius: 6px;
+      background: white;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .top-button.gold {
+      background: #f4c76a;
+      border-color: #f4c76a;
+      color: #111;
+    }
+
+    /* =========================
+       CONTENT
+    ========================= */
+
+    .content {
+      padding: 32px 30px 50px;
+    }
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .page-heading h1 {
+      margin: 0;
+      font-size: 35px;
+      color: #101d39;
+    }
+
+    .page-heading p {
+      margin: 7px 0 0;
+      color: #5f7392;
+      font-size: 16px;
+    }
+
+    .current-date {
+      color: #60738f;
+      font-size: 14px;
+      padding-top: 10px;
+    }
+
+    /* =========================
+       STAT CARDS
+    ========================= */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      min-height: 130px;
+      padding: 20px;
+      border-radius: 6px;
+      border: 1px solid;
+      transition: .2s;
+      user-select: none;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.08);
+    }
+
+    .stat-card.active {
+      outline: 3px solid rgba(24,119,232,.18);
+      transform: translateY(-2px);
+    }
+
+    .total {
+      background: #f0f8ff;
+      border-color: #b8dcff;
+    }
+
+    .new {
+      background: #fffaf0;
+      border-color: #f4d48a;
+    }
+
+    .confirmed {
+      background: #effbf5;
+      border-color: #b9ead4;
+    }
+
+    .completed {
+      background: #f5f0ff;
+      border-color: #d6c7ff;
+    }
+
+    .cancelled {
+      background: #fff1f1;
+      border-color: #ffc6c6;
+    }
+
+    .stat-top {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .total .stat-icon {
+      background: #1478e6;
+    }
+
+    .new .stat-icon {
+      background: var(--orange);
+    }
+
+    .confirmed .stat-icon {
+      background: var(--green);
+    }
+
+    .completed .stat-icon {
+      background: var(--purple);
+    }
+
+    .cancelled .stat-icon {
+      background: var(--red);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #2a3d5c;
+    }
+
+    .stat-number {
+      font-size: 29px;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    .stat-footer {
+      margin-top: 7px;
+      font-size: 12px;
+      color: #6c7e99;
+    }
+
+    /* =========================
+       APPOINTMENT PANEL
+    ========================= */
+
+    .appointment-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(20,38,58,.05);
+    }
+
+    .filter-bar {
+      padding: 22px;
+      display: flex;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .filter-search {
+      flex: 1;
+      position: relative;
+    }
+
+    .filter-search span {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #71839c;
+    }
+
+    .filter-search input,
+    .filter-select,
+    .filter-date {
+      height: 43px;
+      border: 1px solid #d3ddea;
+      outline: none;
+      background: white;
+    }
+
+    .filter-search input {
+      width: 100%;
+      border-radius: 24px;
+      padding: 0 15px 0 42px;
+    }
+
+    .filter-select {
+      min-width: 180px;
+      border-radius: 5px;
+      padding: 0 12px;
+    }
+
+    .filter-date {
+      min-width: 160px;
+      border-radius: 5px;
+      padding: 0 12px;
+    }
+
+    .filter-search input:focus,
+    .filter-select:focus,
+    .filter-date:focus {
+      border-color: var(--gold);
+    }
+
+    #list {
+      padding: 0 20px;
+    }
+
+    /* =========================
+       APPOINTMENT
+    ========================= */
+
+    .appointment {
+      display: grid;
+      grid-template-columns:
+        minmax(330px, 1.2fr)
+        minmax(200px, .8fr)
+        minmax(350px, 1.15fr);
+
+      gap: 20px;
+      padding: 25px 15px;
+      border-bottom: 1px solid #e4e9f1;
+      align-items: center;
+    }
+
+    .appointment:last-child {
+      border-bottom: 0;
+    }
+
+    .customer-info {
+      display: flex;
+      gap: 15px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #e8f2ff;
+      color: #1477dd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .customer-main {
+      min-width: 0;
+    }
+
+    .customer-name-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .customer-name {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .service-name {
+      margin: 5px 0 12px;
+      color: #5c708e;
+      font-size: 14px;
+    }
+
+    .details {
+      display: grid;
+      gap: 7px;
+      color: #637792;
+      font-size: 13px;
+    }
+
+    .detail-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .message-box {
+      margin-top: 10px;
+      padding: 9px 12px;
+      background: #f5f8fc;
+      border-radius: 5px;
+      color: #687c98;
+      font-size: 13px;
+      word-break: break-word;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-new {
+      background: #e9f2ff;
+      color: #1877e8;
+    }
+
+    .status-confirmed {
+      background: #e6f8f0;
+      color: #099262;
+    }
+
+    .status-completed {
+      background: #eee9ff;
+      color: #7451d4;
+    }
+
+    .status-cancelled {
+      background: #ffe9e9;
+      color: #e83c3c;
+    }
+
+    /* =========================
+       META
+    ========================= */
+
+    .appointment-meta {
+      border-left: 1px solid #e2e8f0;
+      padding-left: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .meta-icon {
+      color: #6e819d;
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 12px;
+      color: #72849d;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 13px;
+      color: #405471;
+    }
+
+    /* =========================
+       ACTIONS
+    ========================= */
+
+    .actions {
+      border-left: 1px solid #e2e8f0;
+      padding-left: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+    }
+
+    .action-btn {
+      height: 63px;
+      border: 0;
+      border-radius: 5px;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+      transition: .15s;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      opacity: .9;
+    }
+
+    .confirm {
+      background: var(--green);
+    }
+
+    .reschedule {
+      background: var(--blue);
+    }
+
+    .cancel {
+      background: var(--red);
+    }
+
+    .done {
+      background: var(--purple);
+    }
+
+    .whatsapp-btn {
+      grid-column: 1 / -1;
+      height: 43px;
+      border: 1px solid #7bd5bf;
+      border-radius: 5px;
+      background: #effbf7;
+      color: #078d6e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .whatsapp-btn:hover {
+      background: #e0f8f0;
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty-state {
+      text-align: center;
+      padding: 70px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state h3 {
+      color: var(--text);
+      margin-bottom: 7px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .list-footer {
+      padding: 18px 25px;
+      border-top: 1px solid var(--border);
+      color: #71839c;
+      font-size: 13px;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast-container {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      z-index: 1000;
+    }
+
+    .toast {
+      min-width: 280px;
+      padding: 15px 18px;
+      margin-top: 10px;
+      border-radius: 7px;
+      color: white;
+      background: #17283c;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--green);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--red);
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    .mobile-menu {
+      display: none;
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+    }
+
+    @media (max-width: 1250px) {
+
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .appointment {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .actions {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid #e2e8f0;
+        padding: 18px 0 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+
+      .sidebar {
+        width: 235px;
+      }
+
+      .main-wrapper {
+        margin-left: 235px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .appointment {
+        grid-template-columns: 1fr;
+      }
+
+      .appointment-meta {
+        border-left: 0;
+        border-top: 1px solid #e2e8f0;
+        padding-left: 0;
+        padding-top: 18px;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: .25s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .top-search {
+        width: auto;
+        flex: 1;
+      }
+
+      .notification-button {
+        display: none;
+      }
+
+      .top-button.gold {
+        display: none;
+      }
+
+      .content {
+        padding: 22px 15px;
+      }
+
+      .page-heading {
+        flex-direction: column;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-bar {
+        flex-direction: column;
+      }
+
+      .filter-search {
+        width: 100%;
+      }
+
+      .filter-select,
+      .filter-date {
+        width: 100%;
+      }
+
+      .actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #list {
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+
+<body class="admin">
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+  <a href="/admin" class="brand">
+
+    <div class="brand-row">
+
+      <div class="brand-crown">
+        ♛
+      </div>
+
+      <div class="brand-name">
+        ROYAL <span>STITCH</span>
+      </div>
+
+    </div>
+
+    <div class="brand-subtitle">
+      ADMIN DASHBOARD
+    </div>
+
+  </a>
+
+
+  <nav>
+
+    <a href="/admin" class="nav-item active">
+      <span class="nav-icon">⌂</span>
+      Dashboard
+    </a>
+
+    <a href="#appointments" class="nav-item">
+      <span class="nav-icon">▣</span>
+      Appointments
+    </a>
+
+    <a href="#notificationLog" class="nav-item">
+      <span class="nav-icon">♧</span>
+      Notification Log
+    </a>
+
+    <button
+      class="nav-item"
+      id="settingsButton"
+    >
+      <span class="nav-icon">⚙</span>
+      Settings
+    </button>
+
+  </nav>
+
+
+  <div class="sidebar-footer">
+
+    <div class="footer-line">
+      ♛
+    </div>
+
+    Quality Stitches<br>
+    for a Royal You
+
+  </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main-wrapper">
+
+  <header class="topbar">
+
+    <button
+      class="mobile-menu"
+      id="mobileMenu"
+    >
+      ☰
+    </button>
+
+
+    <div class="top-search">
+
+      <span>⌕</span>
+
+      <input
+        id="globalSearch"
+        type="search"
+        placeholder="Search appointments..."
+      >
+
+    </div>
+
+
+    <div class="top-spacer"></div>
+
+
+    <button
+      class="notification-button"
+      id="notificationBell"
+    >
+      ♧
+      <span class="notification-dot"></span>
+    </button>
+
+
+    <button
+      class="top-button gold"
+      id="notify"
+    >
+      🔔 &nbsp; Enable Notifications
+    </button>
+
+
+    <button
+      class="top-button"
+      id="logout"
+    >
+      ⇥ &nbsp; Logout
+    </button>
+
+  </header>
+
+
+  <main
+    class="content"
+    id="appointments"
+  >
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-heading">
+
+      <div>
+
+        <h1>
+          Appointments
+        </h1>
+
+        <p>
+          Manage customer bookings and update their status
+        </p>
+
+      </div>
+
+
+      <div
+        class="current-date"
+        id="currentDate"
+      >
+        Loading...
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         STATUS CARDS
+         CLICKING THEM FILTERS THE APPOINTMENTS
+    ================================================== -->
+
+    <section class="stats-grid">
+
+
+      <!-- TOTAL -->
+
+      <div
+        class="stat-card total"
+        data-filter="all"
+      >
+
+        <div class="stat-top">
+
+          <div class="stat-icon">
+            ▣
+          </div>
+
+          <div>
+
+            <div class="stat-label">
+              Total Appointments
+            </div>
+
+            <div
+              class="stat-number"
+              id="totalCount"
+            >
+              0
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="stat-footer"
+          id="totalFooter"
+        >
+          All appointments
+        </div>
+
+      </div>
+
+
+      <!-- NEW -->
+
+      <div
+        class="stat-card new"
+        data-filter="new"
+        title="Show only new appointments"
+      >
+
+        <div class="stat-top">
+
+          <div class="stat-icon">
+            ◷
+          </div>
+
+          <div>
+
+            <div class="stat-label">
+              New
+            </div>
+
+            <div
+              class="stat-number"
+              id="newCount"
+            >
+              0
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="stat-footer">
+          Click to show New appointments
+        </div>
+
+      </div>
+
+
+      <!-- CONFIRMED -->
+
+      <div
+        class="stat-card confirmed"
+        data-filter="confirmed"
+        title="Show only confirmed appointments"
+      >
+
+        <div class="stat-top">
+
+          <div class="stat-icon">
+            ✓
+          </div>
+
+          <div>
+
+            <div class="stat-label">
+              Confirmed
+            </div>
+
+            <div
+              class="stat-number"
+              id="confirmedCount"
+            >
+              0
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="stat-footer">
+          Click to show Confirmed appointments
+        </div>
+
+      </div>
+
+
+      <!-- COMPLETED -->
+
+      <div
+        class="stat-card completed"
+        data-filter="completed"
+        title="Show only completed appointments"
+      >
+
+        <div class="stat-top">
+
+          <div class="stat-icon">
+            ✓
+          </div>
+
+          <div>
+
+            <div class="stat-label">
+              Completed
+            </div>
+
+            <div
+              class="stat-number"
+              id="completedCount"
+            >
+              0
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="stat-footer">
+          Click to show Completed appointments
+        </div>
+
+      </div>
+
+
+      <!-- CANCELLED -->
+
+      <div
+        class="stat-card cancelled"
+        data-filter="cancelled"
+        title="Show only cancelled appointments"
+      >
+
+        <div class="stat-top">
+
+          <div class="stat-icon">
+            ×
+          </div>
+
+          <div>
+
+            <div class="stat-label">
+              Cancelled
+            </div>
+
+            <div
+              class="stat-number"
+              id="cancelledCount"
+            >
+              0
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="stat-footer">
+          Click to show Cancelled appointments
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =================================================
+         APPOINTMENTS
+    ================================================== -->
+
+    <section class="appointment-panel">
+
+
+      <!-- FILTERS -->
+
+      <div class="filter-bar">
+
+        <div class="filter-search">
+
+          <span>⌕</span>
+
+          <input
+            id="appointmentSearch"
+            type="search"
+            placeholder="Search by name, phone, email or service..."
+          >
+
+        </div>
+
+
+        <select
+          class="filter-select"
+          id="statusFilter"
+        >
+
+          <option value="all">
+            All Statuses
+          </option>
+
+          <option value="new">
+            New
+          </option>
+
+          <option value="confirmed">
+            Confirmed
+          </option>
+
+          <option value="completed">
+            Completed
+          </option>
+
+          <option value="cancelled">
+            Cancelled
+          </option>
+
+        </select>
+
+
+        <input
+          class="filter-date"
+          id="dateFilter"
+          type="date"
+        >
+
+      </div>
+
+
+      <!-- LIST -->
+
+      <div id="list">
+        <div class="empty-state">
+          Loading appointments...
+        </div>
+      </div>
+
+
+      <div class="list-footer">
+
+        <span id="resultCount">
+          Showing 0 appointments
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <div id="notificationLog"></div>
+
+  </main>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+  class="toast-container"
+  id="toastContainer"
+></div>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let appointments = [];
+
+let known = new Set();
+
+let firstLoad = true;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+const $ = selector =>
+  document.querySelector(selector);
+
+
+const esc = value =>
+  String(value ?? "")
+    .replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[char]));
+
+
+function getInitials(name) {
+
+  const words =
+    String(name || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+
+  if (!words.length) {
+    return "RS";
+  }
+
+  if (words.length === 1) {
+    return words[0]
+      .substring(0, 2)
+      .toUpperCase();
+  }
+
+  return (
+    words[0][0] +
+    words[words.length - 1][0]
+  ).toUpperCase();
+}
+
+
+function formatDate(date) {
+
+  if (!date) {
+    return "";
+  }
+
+  const d =
+    new Date(date + "T00:00:00");
+
+  if (Number.isNaN(d.getTime())) {
+    return date;
+  }
+
+  return d.toLocaleDateString(
+    undefined,
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    }
+  );
+}
+
+
+function formatTime(time) {
+
+  if (!time) {
+    return "";
+  }
+
+  const parts =
+    time.split(":");
+
+  if (parts.length < 2) {
+    return time;
+  }
+
+  let hour =
+    Number(parts[0]);
+
+  const minute =
+    parts[1];
+
+  if (Number.isNaN(hour)) {
+    return time;
+  }
+
+  const suffix =
+    hour >= 12
+      ? "PM"
+      : "AM";
+
+  hour =
+    hour % 12;
+
+  if (hour === 0) {
+    hour = 12;
+  }
+
+  return `${hour}:${minute} ${suffix}`;
+}
+
+
+function showToast(
+  message,
+  type = "success"
+) {
+
+  const container =
+    $("#toastContainer");
+
+  const toast =
+    document.createElement("div");
+
+  toast.className =
+    `toast ${type}`;
+
+  toast.textContent =
+    message;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 3500);
+}
+
+
+/* =====================================================
+   CURRENT DATE
+===================================================== */
+
+function updateCurrentDate() {
+
+  const now =
+    new Date();
+
+  const date =
+    now.toLocaleDateString(
+      undefined,
+      {
+        weekday: "short",
+        month: "short",
+        day: "2-digit",
+        year: "numeric"
+      }
+    );
+
+  const time =
+    now.toLocaleTimeString(
+      undefined,
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  $("#currentDate").textContent =
+    `▣ ${date} • ${time}`;
+}
+
+updateCurrentDate();
+
+setInterval(
+  updateCurrentDate,
+  60000
+);
+
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+function updateStats(rows) {
+
+  const total =
+    rows.length;
+
+  const newCount =
+    rows.filter(
+      x => x.status === "new"
+    ).length;
+
+  const confirmed =
+    rows.filter(
+      x => x.status === "confirmed"
+    ).length;
+
+  const completed =
+    rows.filter(
+      x => x.status === "completed"
+    ).length;
+
+  const cancelled =
+    rows.filter(
+      x => x.status === "cancelled"
+    ).length;
+
+
+  $("#totalCount").textContent =
+    total;
+
+  $("#newCount").textContent =
+    newCount;
+
+  $("#confirmedCount").textContent =
+    confirmed;
+
+  $("#completedCount").textContent =
+    completed;
+
+  $("#cancelledCount").textContent =
+    cancelled;
+
+  $("#totalFooter").textContent =
+    `${total} appointment${total === 1 ? "" : "s"}`;
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function getFilteredAppointments() {
+
+  const search =
+    $("#appointmentSearch")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const status =
+    $("#statusFilter").value;
+
+  const date =
+    $("#dateFilter").value;
+
+
+  return appointments.filter(
+    appointment => {
+
+      const searchable = [
+
+        appointment.name,
+
+        appointment.phone,
+
+        appointment.email,
+
+        appointment.service,
+
+        appointment.message,
+
+        appointment.status
+
+      ]
+        .join(" ")
+        .toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        searchable.includes(search);
+
+
+      const matchesStatus =
+        status === "all" ||
+        appointment.status === status;
+
+
+      const matchesDate =
+        !date ||
+        appointment.date === date;
+
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesDate
+      );
+
+    }
+  );
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderAppointments() {
+
+  const rows =
+    getFilteredAppointments();
+
+  const list =
+    $("#list");
+
+
+  $("#resultCount").textContent =
+    `Showing ${rows.length} appointment${rows.length === 1 ? "" : "s"}`;
+
+
+  if (!rows.length) {
+
+    list.innerHTML = `
+
+      <div class="empty-state">
+
+        <div style="font-size:45px;">
+          ▣
+        </div>
+
+        <h3>
+          No appointments found
+        </h3>
+
+        <p>
+          No appointments match the selected filter.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML =
+    rows.map(x => {
+
+      const phone =
+        String(x.phone || "")
+          .replace(/\D/g, "");
+
+
+      const whatsapp =
+        `https://wa.me/${phone}`;
+
+
+      return `
+
+        <article
+          class="appointment"
+          data-id="${Number(x.id)}"
+        >
+
+
+          <!-- CUSTOMER -->
+
+          <div class="customer-info">
+
+            <div class="avatar">
+              ${esc(getInitials(x.name))}
+            </div>
+
+
+            <div class="customer-main">
+
+              <div class="customer-name-row">
+
+                <h3 class="customer-name">
+                  ${esc(x.name)}
+                </h3>
+
+                <span
+                  class="status-badge status-${esc(x.status || "new")}"
+                >
+                  ${esc(
+                    String(x.status || "new")
+                      .toUpperCase()
+                  )}
+                </span>
+
+              </div>
+
+
+              <div class="service-name">
+                ${esc(x.service)}
+              </div>
+
+
+              <div class="details">
+
+                <div class="detail-item">
+                  <span>▣</span>
+                  <span>
+                    ${esc(formatDate(x.date))}
+                  </span>
+                </div>
+
+                <div class="detail-item">
+                  <span>◷</span>
+                  <span>
+                    ${esc(formatTime(x.time))}
+                  </span>
+                </div>
+
+                <div class="detail-item">
+                  <span>☎</span>
+                  <span>
+                    ${esc(x.phone)}
+                  </span>
+                </div>
+
+                ${
+                  x.email
+                    ? `
+                      <div class="detail-item">
+                        <span>✉</span>
+                        <span>
+                          ${esc(x.email)}
+                        </span>
+                      </div>
+                    `
+                    : ""
+                }
+
+              </div>
+
+
+              ${
+                x.message
+                  ? `
+                    <div class="message-box">
+                      💬 ${esc(x.message)}
+                    </div>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+
+          <!-- META -->
+
+          <div class="appointment-meta">
+
+            <div class="meta-row">
+
+              <div class="meta-icon">
+                ▣
+              </div>
+
+              <div>
+
+                <span class="meta-label">
+                  Appointment Date
+                </span>
+
+                <span class="meta-value">
+                  ${esc(formatDate(x.date))}
+                  &nbsp;
+                  ${esc(formatTime(x.time))}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="meta-row">
+
+              <div class="meta-icon">
+                ◷
+              </div>
+
+              <div>
+
+                <span class="meta-label">
+                  Status
+                </span>
+
+                <span class="meta-value">
+                  ${esc(
+                    String(x.status || "new")
+                      .replace(
+                        /^\w/,
+                        c => c.toUpperCase()
+                      )
+                  )}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ACTIONS -->
+
+          <div class="actions">
+
+            <button
+              class="action-btn confirm"
+              data-action="status"
+              data-status="confirmed"
+              data-id="${Number(x.id)}"
+            >
+              ✓<br>
+              Confirm
+            </button>
+
+
+            <button
+              class="action-btn reschedule"
+              data-action="reschedule"
+              data-id="${Number(x.id)}"
+            >
+              ▣<br>
+              Reschedule
+            </button>
+
+
+            <button
+              class="action-btn cancel"
+              data-action="status"
+              data-status="cancelled"
+              data-id="${Number(x.id)}"
+            >
+              ×<br>
+              Cancel
+            </button>
+
+
+            <button
+              class="action-btn done"
+              data-action="status"
+              data-status="completed"
+              data-id="${Number(x.id)}"
+            >
+              ✓<br>
+              Done
+            </button>
+
+
+            <a
+              class="whatsapp-btn"
+              href="${esc(whatsapp)}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ◉ &nbsp; WhatsApp
+            </a>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
+
+async function load() {
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/appointments",
+        {
+          cache: "no-store"
+        }
+      );
+
+
+    if (response.status === 401) {
+
+      location.href =
+        "/admin/login";
+
+      return;
+    }
+
+
+    if (!response.ok) {
+      throw new Error(
+        "Could not load appointments"
+      );
+    }
+
+
+    const rows =
+      await response.json();
+
+
+    const fresh =
+      rows.filter(
+        x => !known.has(x.id)
+      );
+
+
+    if (
+      !firstLoad &&
+      fresh.length &&
+      "Notification" in window &&
+      Notification.permission === "granted"
+    ) {
+
+      fresh.forEach(x => {
+
+        new Notification(
+          "New appointment",
+          {
+            body:
+              `${x.name} · ${x.date} ${x.time}`
+          }
+        );
+
+      });
+
+    }
+
+
+    rows.forEach(
+      x => known.add(x.id)
+    );
+
+
+    appointments =
+      rows;
+
+
+    updateStats(rows);
+
+    renderAppointments();
+
+    firstLoad = false;
+
+  } catch (error) {
+
+    console.error(error);
+
+    $("#list").innerHTML = `
+
+      <div class="empty-state">
+
+        <div style="font-size:45px;">
+          ⚠
+        </div>
+
+        <h3>
+          Could not load appointments
+        </h3>
+
+        <p>
+          Make sure the server is running.
+        </p>
+
+      </div>
+
+    `;
+
+  }
+}
+
+
+/* =====================================================
+   IMPORTANT:
+   CLICK NEW / CANCELLED / OTHER STAT CARD
+===================================================== */
+
+document
+  .querySelectorAll(".stat-card")
+  .forEach(card => {
+
+    card.addEventListener(
+      "click",
+      () => {
+
+        const filter =
+          card.dataset.filter;
+
+
+        /*
+          Remove active state
+          from every card.
+        */
+
+        document
+          .querySelectorAll(".stat-card")
+          .forEach(
+            c => c.classList.remove("active")
+          );
+
+
+        /*
+          Highlight clicked card.
+        */
+
+        card.classList.add("active");
+
+
+        /*
+          Set dropdown filter.
+        */
+
+        $("#statusFilter").value =
+          filter;
+
+
+        /*
+          Clear date filter.
+        */
+
+        $("#dateFilter").value =
+          "";
+
+
+        /*
+          Show selected appointments.
+        */
+
+        renderAppointments();
+
+
+        /*
+          Scroll to appointment list.
+        */
+
+        document
+          .querySelector(".appointment-panel")
+          .scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+      }
+    );
+
+  });
+
+
+/* =====================================================
+   STATUS DROPDOWN
+===================================================== */
+
+$("#statusFilter")
+  .addEventListener(
+    "change",
+    () => {
+
+      const value =
+        $("#statusFilter").value;
+
+
+      document
+        .querySelectorAll(".stat-card")
+        .forEach(
+          card => {
+
+            card.classList.toggle(
+              "active",
+              card.dataset.filter === value
+            );
+
+          }
+        );
+
+
+      renderAppointments();
+
+    }
+  );
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+$("#appointmentSearch")
+  .addEventListener(
+    "input",
+    renderAppointments
+  );
+
+
+$("#globalSearch")
+  .addEventListener(
+    "input",
+    event => {
+
+      $("#appointmentSearch").value =
+        event.target.value;
+
+      renderAppointments();
+
+    }
+  );
+
+
+/* =====================================================
+   DATE FILTER
+===================================================== */
+
+$("#dateFilter")
+  .addEventListener(
+    "change",
+    renderAppointments
+  );
+
+
+/* =====================================================
+   CHANGE STATUS
+===================================================== */
+
+async function changeStatus(
+  id,
+  status
+) {
+
+  const appointment =
+    appointments.find(
+      x =>
+        Number(x.id) ===
+        Number(id)
+    );
+
+
+  if (!appointment) {
+    return;
+  }
+
+
+  if (status === "cancelled") {
+
+    const confirmed =
+      confirm(
+        `Cancel appointment for ${appointment.name}?`
+      );
+
+
+    if (!confirmed) {
+      return;
+    }
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/appointments/${id}`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            status
+          })
+        }
+      );
+
+
+    if (response.status === 401) {
+
+      location.href =
+        "/admin/login";
+
+      return;
+    }
+
+
+    if (!response.ok) {
+      throw new Error(
+        "Status update failed"
+      );
+    }
+
+
+    /*
+      IMPORTANT:
+      After changing status,
+      automatically show ONLY
+      appointments with the new status.
+    */
+
+    $("#statusFilter").value =
+      status;
+
+
+    $("#dateFilter").value =
+      "";
+
+
+    document
+      .querySelectorAll(".stat-card")
+      .forEach(card => {
+
+        card.classList.toggle(
+          "active",
+          card.dataset.filter === status
+        );
+
+      });
+
+
+    showToast(
+      `Appointment is now ${status}.`,
+      "success"
+    );
+
+
+    await load();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "Could not update appointment.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =====================================================
+   RESCHEDULE
+===================================================== */
+
+async function reschedule(id) {
+
+  const appointment =
+    appointments.find(
+      x =>
+        Number(x.id) ===
+        Number(id)
+    );
+
+
+  if (!appointment) {
+    return;
+  }
+
+
+  const nextDate =
+    prompt(
+      "New date (YYYY-MM-DD):",
+      appointment.date
+    );
+
+
+  if (!nextDate) {
+    return;
+  }
+
+
+  const nextTime =
+    prompt(
+      "New time (e.g. 16:00):",
+      appointment.time
+    );
+
+
+  if (!nextTime) {
+    return;
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        `/api/appointments/${id}`,
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            date: nextDate.trim(),
+            time: nextTime.trim()
+          })
+        }
+      );
+
+
+    if (response.status === 401) {
+
+      location.href =
+        "/admin/login";
+
+      return;
+    }
+
+
+    if (!response.ok) {
+      throw new Error(
+        "Reschedule failed"
+      );
+    }
+
+
+    showToast(
+      "Appointment rescheduled successfully.",
+      "success"
+    );
+
+
+    await load();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      "Could not reschedule appointment.",
+      "error"
+    );
+
+  }
+}
+
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+
+$("#list")
+  .addEventListener(
+    "click",
+    async event => {
+
+      const button =
+        event.target.closest(
+          "[data-action]"
+        );
+
+
+      if (!button) {
+        return;
+      }
+
+
+      const id =
+        button.dataset.id;
+
+
+      if (
+        button.dataset.action ===
+        "status"
+      ) {
+
+        await changeStatus(
+          id,
+          button.dataset.status
+        );
+
+        return;
+      }
+
+
+      if (
+        button.dataset.action ===
+        "reschedule"
+      ) {
+
+        await reschedule(id);
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+$("#notify")
+  .addEventListener(
+    "click",
+    async () => {
+
+      if (!("Notification" in window)) {
+
+        showToast(
+          "Browser notifications are not supported.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const permission =
+        await Notification.requestPermission();
+
+
+      if (permission === "granted") {
+
+        $("#notify").textContent =
+          "✓ Notifications Enabled";
+
+        showToast(
+          "Notifications enabled.",
+          "success"
+        );
+
+      } else {
+
+        $("#notify").textContent =
+          "🔔 Enable Notifications";
+
+        showToast(
+          "Notification permission was not granted.",
+          "error"
+        );
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   NOTIFICATION BELL
+===================================================== */
+
+$("#notificationBell")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "New appointment notifications appear here.",
+        "success"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+$("#logout")
+  .addEventListener(
+    "click",
+    async () => {
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to logout?"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      try {
+
+        await fetch(
+          "/api/logout",
+          {
+            method: "POST"
+          }
+        );
+
+      } finally {
+
+        location.href =
+          "/admin/login";
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+$("#settingsButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      showToast(
+        "Settings are not configured yet.",
+        "success"
+      );
+
+    }
+  );
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+$("#mobileMenu")
+  .addEventListener(
+    "click",
+    () => {
+
+      $("#sidebar")
+        .classList.toggle("open");
+
+    }
+  );
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+load();
+
+
+/*
+  Refresh every 3 seconds
+*/
+
+setInterval(
+  load,
+  3000
+);
+
+</script>
+
+</body>
+</html>

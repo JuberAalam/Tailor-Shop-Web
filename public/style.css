@@ -1,0 +1,1752 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@400;500;600;700&display=swap');
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+  background: #f5f1e9;
+  color: #101820;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+
+button {
+  cursor: pointer;
+}
+
+
+::selection {
+  background: #e4b960;
+  color: #101820;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root {
+
+  --navy: #0b1821;
+  --navy-light: #122631;
+
+  --gold: #e4b960;
+  --gold-light: #f1cb7b;
+
+  --cream: #f5f1e9;
+  --cream-dark: #e7dfd1;
+
+  --white: #ffffff;
+
+  --text: #101820;
+  --muted: #68717a;
+
+  --border: #ded8ce;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  min-height: 48px;
+
+  padding: 13px 22px;
+
+  border: 1px solid transparent;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: .02em;
+
+  transition:
+    transform .25s ease,
+    background .25s ease,
+    color .25s ease,
+    box-shadow .25s ease;
+}
+
+
+.btn span {
+  font-size: 17px;
+}
+
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+
+.gold {
+  background: var(--gold);
+  color: #111820;
+}
+
+
+.gold:hover {
+  background: var(--gold-light);
+
+  box-shadow:
+    0 10px 30px rgba(228, 185, 96, .20);
+}
+
+
+.btn:disabled {
+  opacity: .65;
+  cursor: wait;
+  transform: none;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+
+  position: relative;
+  z-index: 10;
+
+  min-height: 86px;
+
+  padding: 18px 7%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  background: var(--navy);
+  color: white;
+
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+
+.logo {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+
+.logo-main {
+  font-family: "Playfair Display", serif;
+
+  font-size: 23px;
+
+  line-height: 1;
+
+  letter-spacing: .07em;
+}
+
+
+.logo-main b {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+
+.logo small {
+  margin-top: 7px;
+
+  color: #91a0a9;
+
+  font-size: 8px;
+  font-weight: 600;
+
+  letter-spacing: .27em;
+}
+
+
+.desktop-nav {
+
+  display: flex;
+  align-items: center;
+
+  gap: 35px;
+
+  margin-left: auto;
+}
+
+
+.desktop-nav a {
+
+  position: relative;
+
+  color: #c7d0d5;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  transition: color .2s ease;
+}
+
+
+.desktop-nav a::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -7px;
+
+  width: 0;
+  height: 1px;
+
+  background: var(--gold);
+
+  transition: width .25s ease;
+}
+
+
+.desktop-nav a:hover {
+  color: white;
+}
+
+
+.desktop-nav a:hover::after {
+  width: 100%;
+}
+
+
+.header-book {
+  margin-left: 5px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+
+  min-height: 680px;
+
+  background: var(--navy);
+
+  color: white;
+}
+
+
+.hero-content {
+
+  padding:
+    100px
+    clamp(35px, 9vw, 125px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.eyebrow,
+.section-label {
+
+  display: inline-block;
+
+  color: var(--gold);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: .17em;
+
+  text-transform: uppercase;
+}
+
+
+.hero h1 {
+
+  margin-top: 22px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(52px, 6vw, 78px);
+
+  font-weight: 500;
+
+  line-height: 1.02;
+
+  letter-spacing: -.03em;
+}
+
+
+.hero h1 em {
+
+  color: var(--gold);
+
+  font-weight: 500;
+}
+
+
+.hero-description {
+
+  max-width: 510px;
+
+  margin-top: 28px;
+
+  color: #b9c2c7;
+
+  font-size: 16px;
+
+  line-height: 1.9;
+}
+
+
+.hero-actions {
+
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  margin-top: 35px;
+}
+
+
+.text-link {
+
+  color: #d8dee1;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: color .2s ease;
+}
+
+
+.text-link span {
+  margin-left: 6px;
+  color: var(--gold);
+}
+
+
+.text-link:hover {
+  color: var(--gold);
+}
+
+
+.hero-features {
+
+  display: flex;
+
+  gap: 35px;
+
+  margin-top: 65px;
+
+  padding-top: 25px;
+
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+
+
+.hero-features div {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.hero-features strong {
+
+  color: var(--gold);
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 17px;
+
+  font-weight: 500;
+}
+
+
+.hero-features span {
+
+  color: #8d9ba3;
+
+  font-size: 10px;
+
+  text-transform: uppercase;
+
+  letter-spacing: .09em;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.hero-visual {
+
+  position: relative;
+
+  min-height: 680px;
+
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2b211b 0%,
+      #9b7c5b 45%,
+      #4a382b 72%,
+      #161b1e 100%
+    );
+}
+
+
+.hero-visual::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 25% 25%,
+      rgba(255,255,255,.17),
+      transparent 28%
+    ),
+    linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(255,255,255,.08),
+      transparent 65%
+    );
+
+  opacity: .8;
+}
+
+
+.hero-visual::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  border: 1px solid rgba(255,255,255,.16);
+
+  transform: rotate(45deg);
+
+  opacity: .7;
+}
+
+
+.visual-overlay {
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(8,18,25,.10),
+      rgba(8,18,25,.50)
+    );
+}
+
+
+.visual-content {
+
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+
+.visual-content > span {
+
+  color: #f3d48d;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: .25em;
+}
+
+
+.visual-content h2 {
+
+  margin-top: 22px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(34px, 4vw, 52px);
+
+  font-weight: 500;
+
+  line-height: 1.1;
+
+  text-shadow:
+    0 4px 30px rgba(0,0,0,.25);
+}
+
+
+.visual-content h2 em {
+  color: white;
+}
+
+
+.visual-line {
+
+  width: 55px;
+  height: 1px;
+
+  margin: 28px auto;
+
+  background: var(--gold);
+}
+
+
+.visual-content p {
+
+  color: #eee;
+
+  font-size: 12px;
+
+  letter-spacing: .12em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro-section {
+
+  display: grid;
+
+  grid-template-columns: 80px 1.4fr 1fr;
+
+  gap: 50px;
+
+  padding:
+    105px
+    8%;
+
+  background: var(--cream);
+}
+
+
+.intro-number {
+
+  color: var(--gold);
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 20px;
+}
+
+
+.intro-content h2 {
+
+  margin-top: 16px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(38px, 4vw, 55px);
+
+  font-weight: 500;
+
+  line-height: 1.1;
+}
+
+
+.intro-content h2 em {
+  color: #8d7048;
+}
+
+
+.intro-content p {
+
+  max-width: 580px;
+
+  margin-top: 25px;
+
+  color: var(--muted);
+
+  font-size: 15px;
+
+  line-height: 1.9;
+}
+
+
+.intro-details {
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  border-left: 1px solid var(--border);
+
+  padding-left: 45px;
+
+  gap: 27px;
+}
+
+
+.intro-details div {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+
+.intro-details strong {
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 20px;
+
+  font-weight: 500;
+}
+
+
+.intro-details span {
+
+  color: var(--muted);
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services-section {
+
+  padding:
+    110px
+    8%;
+
+  background: #faf8f3;
+}
+
+
+.section-heading {
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 50px;
+
+  margin-bottom: 50px;
+}
+
+
+.section-heading h2 {
+
+  margin-top: 13px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(42px, 5vw, 60px);
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.section-heading h2 em {
+  color: #8d7048;
+}
+
+
+.section-heading > p {
+
+  max-width: 390px;
+
+  color: var(--muted);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+
+.service-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 16px;
+}
+
+
+.service-card {
+
+  position: relative;
+
+  min-height: 370px;
+
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+
+  border: 1px solid var(--border);
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease,
+    border-color .3s ease;
+}
+
+
+.service-card:hover {
+
+  transform: translateY(-7px);
+
+  border-color: #d4b46f;
+
+  box-shadow:
+    0 20px 50px rgba(20,25,30,.08);
+}
+
+
+.service-number {
+
+  color: #b5aa9b;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: .12em;
+}
+
+
+.service-icon {
+
+  width: 50px;
+  height: 50px;
+
+  margin-top: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #dfc58e;
+
+  border-radius: 50%;
+
+  color: #a27d3b;
+
+  font-size: 22px;
+}
+
+
+.service-card h3 {
+
+  margin-top: 28px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 25px;
+
+  font-weight: 500;
+}
+
+
+.service-card p {
+
+  margin-top: 13px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+.service-card a {
+
+  margin-top: auto;
+  padding-top: 25px;
+
+  color: #8d7048;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+}
+
+
+.service-card a span {
+  margin-left: 8px;
+}
+
+
+.service-card a:hover {
+  color: #111820;
+}
+
+
+/* =========================================================
+   BOOKING
+========================================================= */
+
+.booking-section {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, .8fr)
+    minmax(0, 1.2fr);
+
+  gap: 90px;
+
+  padding:
+    110px
+    8%;
+
+  background: var(--cream-dark);
+}
+
+
+.booking-intro {
+
+  padding-top: 20px;
+}
+
+
+.booking-intro h2 {
+
+  margin-top: 17px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(42px, 5vw, 62px);
+
+  font-weight: 500;
+
+  line-height: 1.05;
+}
+
+
+.booking-intro h2 em {
+  color: #8d7048;
+}
+
+
+.booking-intro > p {
+
+  max-width: 470px;
+
+  margin-top: 27px;
+
+  color: #666b6e;
+
+  line-height: 1.9;
+}
+
+
+.booking-info {
+
+  margin-top: 45px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 23px;
+}
+
+
+.info-item {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+}
+
+
+.info-icon {
+
+  width: 25px;
+  height: 25px;
+
+  flex: 0 0 25px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: var(--navy);
+
+  color: var(--gold);
+
+  font-size: 12px;
+}
+
+
+.info-item div {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+
+.info-item strong {
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 17px;
+
+  font-weight: 500;
+}
+
+
+.info-item small {
+
+  color: #72777a;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   BOOKING CARD
+========================================================= */
+
+.booking-card {
+
+  padding: clamp(25px, 4vw, 45px);
+
+  background: white;
+
+  border: 1px solid #ddd5c8;
+
+  box-shadow:
+    0 25px 70px rgba(30,25,20,.08);
+}
+
+
+.form-header {
+
+  padding-bottom: 25px;
+
+  margin-bottom: 25px;
+
+  border-bottom: 1px solid #ebe7df;
+}
+
+
+.form-header span {
+
+  color: #a07d42;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .18em;
+}
+
+
+.form-header h3 {
+
+  margin-top: 8px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 27px;
+
+  font-weight: 500;
+}
+
+
+#form {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 19px;
+}
+
+
+.form-row {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 17px;
+}
+
+
+#form label {
+
+  display: block;
+
+  color: #263038;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+#form label > span {
+
+  display: block;
+
+  margin-bottom: 8px;
+}
+
+
+#form label b {
+  color: #b3873d;
+}
+
+
+#form input,
+#form select,
+#form textarea {
+
+  width: 100%;
+
+  padding:
+    13px
+    14px;
+
+  border: 1px solid #d9d5cd;
+
+  border-radius: 0;
+
+  outline: none;
+
+  background: #fcfbf8;
+
+  color: #101820;
+
+  font-size: 13px;
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+
+#form input:hover,
+#form select:hover,
+#form textarea:hover {
+  border-color: #bdb6aa;
+}
+
+
+#form input:focus,
+#form select:focus,
+#form textarea:focus {
+
+  border-color: #b38b47;
+
+  background: white;
+
+  box-shadow:
+    0 0 0 3px rgba(228,185,96,.12);
+}
+
+
+#form textarea {
+
+  min-height: 105px;
+
+  resize: vertical;
+}
+
+
+#form input::placeholder,
+#form textarea::placeholder {
+  color: #aaa7a0;
+}
+
+
+.submit-btn {
+
+  width: 100%;
+
+  margin-top: 3px;
+
+  border: 0;
+}
+
+
+.form-note {
+
+  color: #99958e;
+
+  font-size: 10px;
+
+  line-height: 1.6;
+
+  text-align: center;
+}
+
+
+.result {
+
+  min-height: 0;
+
+  font-size: 12px;
+}
+
+
+.result.success {
+
+  padding: 14px 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  background: #edf8f2;
+
+  border: 1px solid #bfe2cd;
+
+  color: #23633d;
+}
+
+
+.result.success strong {
+  font-size: 13px;
+}
+
+
+.result.error {
+
+  padding: 14px 16px;
+
+  background: #fff0f0;
+
+  border: 1px solid #e5bbbb;
+
+  color: #a13b3b;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.final-cta {
+
+  padding:
+    100px
+    8%;
+
+  background: var(--navy);
+
+  color: white;
+
+  text-align: center;
+}
+
+
+.final-cta h2 {
+
+  max-width: 800px;
+
+  margin: 18px auto 30px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: clamp(40px, 5vw, 65px);
+
+  font-weight: 500;
+
+  line-height: 1.1;
+}
+
+
+.final-cta h2 em {
+  color: var(--gold);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+  padding:
+    35px 8%;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  align-items: center;
+
+  gap: 30px;
+
+  background: #08131b;
+
+  color: white;
+}
+
+
+.footer-logo {
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+.footer-logo .logo-main {
+  font-size: 18px;
+}
+
+
+.footer-logo small {
+
+  margin-top: 5px;
+
+  color: #73818a;
+
+  font-size: 7px;
+
+  letter-spacing: .25em;
+}
+
+
+.footer-text {
+
+  color: #89959b;
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+
+.footer-copy {
+
+  color: #68757c;
+
+  font-size: 10px;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   ADMIN LOGIN / EXISTING ADMIN SUPPORT
+========================================================= */
+
+.login-page {
+
+  min-height: 100vh;
+
+  display: grid;
+  place-items: center;
+
+  padding: 25px;
+
+  background: var(--navy);
+}
+
+
+.login-card {
+
+  width: min(420px, 100%);
+
+  padding: 35px;
+
+  background: white;
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.25);
+}
+
+
+.login-card h1 {
+
+  margin-bottom: 20px;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 42px;
+}
+
+
+.login-card label {
+
+  display: block;
+
+  margin-top: 15px;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+.login-card input {
+
+  display: block;
+
+  width: 100%;
+
+  margin-top: 7px;
+
+  padding: 12px;
+
+  border: 1px solid #ddd;
+
+  outline: none;
+}
+
+
+.login-card input:focus {
+  border-color: #b38b47;
+}
+
+
+.error {
+  color: #a33;
+}
+
+
+/* =========================================================
+   OLD ADMIN APPOINTMENT SUPPORT
+========================================================= */
+
+.admin main {
+  padding: 50px 8%;
+}
+
+
+.appointment {
+
+  background: white;
+
+  margin: 12px 0;
+
+  padding: 22px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  align-items: center;
+
+  border-left: 4px solid var(--gold);
+}
+
+
+.appointment button {
+
+  padding: 9px 12px;
+
+  border: 1px solid #ccc;
+
+  background: #fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .site-header {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+
+  .hero-content {
+    padding:
+      75px 7%;
+  }
+
+
+  .service-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+
+  .intro-section {
+
+    grid-template-columns:
+      50px 1fr;
+
+    gap: 30px;
+  }
+
+
+  .intro-details {
+
+    grid-column: 2;
+
+    border-left: 0;
+
+    border-top: 1px solid var(--border);
+
+    padding:
+      30px 0 0;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+
+  .booking-section {
+    gap: 50px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .site-header {
+
+    min-height: 72px;
+
+    padding:
+      15px 5%;
+
+  }
+
+
+  .desktop-nav {
+    display: none;
+  }
+
+
+  .header-book {
+
+    padding:
+      11px 14px;
+
+    font-size: 11px;
+  }
+
+
+  .hero {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .hero-content {
+
+    min-height: 590px;
+
+    padding:
+      75px 7%;
+
+  }
+
+
+  .hero-visual {
+
+    min-height: 430px;
+  }
+
+
+  .hero h1 {
+    font-size: 55px;
+  }
+
+
+  .hero-features {
+
+    gap: 20px;
+
+    justify-content: space-between;
+  }
+
+
+  .hero-features span {
+    font-size: 8px;
+  }
+
+
+  .intro-section {
+
+    display: block;
+
+    padding:
+      75px 7%;
+  }
+
+
+  .intro-number {
+
+    margin-bottom: 25px;
+  }
+
+
+  .intro-details {
+
+    margin-top: 35px;
+
+    display: flex;
+
+    border-top: 1px solid var(--border);
+
+    padding-top: 30px;
+  }
+
+
+  .services-section,
+  .booking-section {
+
+    padding:
+      75px 6%;
+  }
+
+
+  .section-heading {
+
+    display: block;
+  }
+
+
+  .section-heading > p {
+
+    margin-top: 20px;
+  }
+
+
+  .service-grid {
+
+    grid-template-columns: 1fr;
+  }
+
+
+  .service-card {
+
+    min-height: 330px;
+  }
+
+
+  .booking-section {
+
+    grid-template-columns: 1fr;
+
+    gap: 45px;
+  }
+
+
+  .booking-intro {
+
+    padding-top: 0;
+  }
+
+
+  .form-row {
+
+    grid-template-columns: 1fr;
+  }
+
+
+  .final-cta {
+
+    padding:
+      75px 6%;
+  }
+
+
+  footer {
+
+    grid-template-columns: 1fr;
+
+    text-align: center;
+
+    gap: 20px;
+  }
+
+
+  .footer-text,
+  .footer-copy {
+
+    text-align: center;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .logo-main {
+    font-size: 18px;
+  }
+
+
+  .logo small {
+    font-size: 6px;
+  }
+
+
+  .header-book {
+    font-size: 10px;
+    padding: 10px 11px;
+  }
+
+
+  .hero-content {
+    min-height: 570px;
+  }
+
+
+  .hero h1 {
+    font-size: 46px;
+  }
+
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+
+  .hero-actions {
+
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+
+  .hero-features {
+
+    margin-top: 45px;
+
+    gap: 10px;
+  }
+
+
+  .hero-features div {
+    max-width: 90px;
+  }
+
+
+  .hero-visual {
+    min-height: 350px;
+  }
+
+
+  .visual-content h2 {
+    font-size: 34px;
+  }
+
+
+  .intro-content h2,
+  .section-heading h2,
+  .booking-intro h2 {
+    font-size: 40px;
+  }
+
+
+  .booking-card {
+    padding: 22px 18px;
+  }
+
+
+  .final-cta h2 {
+    font-size: 40px;
+  }
+
+}
